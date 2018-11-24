@@ -129,6 +129,17 @@ Promise.prototype.then = function (onFulfilled, onRejected) {
 Promise.prototype.catch = function (onRejected) {
   return this.then(null, onRejected);
 }
+// finally 也是then的一个简写
+Promise.prototype.finally = function (cb) {
+  // 无论成功还是失败 都要执行cb 并且把成功或者失败的值向下传递
+  return this.then(function (data) {
+    cb();
+    return data;
+  }, function (err) {
+    cb();
+    throw err;
+  });
+}
 // 类调用的都叫静态方法
 Promise.reject = function (reason) {
   return new Promise(function (resolve, reject) {

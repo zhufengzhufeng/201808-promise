@@ -22,12 +22,13 @@ p.then(null,function (err) {
 
 
 
-// let promise2 = p.then(function (data) {
-//   return new Promise((resolve,reject)=>{
-//     resolve(new Promise(function (resolve,reject) {
-//       setTimeout(() => {
-//         resolve(10000);
-//       }, 1000);
-//     }));
-//   })
-// })
+let promise2 = p.then(function (data) {
+  return new Promise((resolve,reject)=>{
+    resolve(new Promise(function (resolve,reject) {
+      setTimeout(() => {
+        resolve(10000);
+      }, 1000);
+    }));
+  })
+})
+

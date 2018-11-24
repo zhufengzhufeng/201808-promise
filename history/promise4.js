@@ -126,20 +126,7 @@ Promise.prototype.then = function (onFulfilled, onRejected) {
   
 }
 // npm install promises-aplus-tests -g
-Promise.prototype.catch = function (onRejected) {
-  return this.then(null, onRejected);
-}
-// 类调用的都叫静态方法
-Promise.reject = function (reason) {
-  return new Promise(function (resolve, reject) {
-    reject(reason);
-  })
-}
-Promise.resolve = function (value) {
-  return new Promise(function (resolve, reject) {
-    resolve(value);
-  })
-}
+
 Promise.deferred = Promise.defer = function () {
   let dfd = {};
   dfd.promise = new Promise((resolve,reject)=>{

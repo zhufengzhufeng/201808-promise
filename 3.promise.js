@@ -53,11 +53,13 @@ function read(file) {
 // }).catch(function (err) {
 //   console.log(err);
 // });
+
 Promise.race([read('./name.txt'), read('./age.txt')]).then(function (data) {
   console.log(data);
 }).catch(function (err) {
   console.log(err);
 });
+
 // new Promise(function (resolve, reject) {
 //   resolve(1);
 // })
@@ -90,4 +92,9 @@ Promise.race([read('./name.txt'), read('./age.txt')]).then(function (data) {
 // .then(function (res) {
 //   console.log(res)
 // })
+
+// 老师，讲讲这道题吧假设有一个接口，通过单个的用户id可以获取用户名，现在有10个用户id（请随机生成10个0 ~100之间的数据模拟用户id），请实现一个用来获取这10个用户id对应的用户名的方法。 补充：假设接口”，参数名是uid 要求：请求并发数不超过两个（请注意并发数！！）
+
+
+
 

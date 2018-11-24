@@ -37,10 +37,42 @@ function resolvePromise(promise2,x,resolve,reject) {
   // 这个处理函数 需要处理的逻辑韩式很复杂的
   // 有可能这个x 是一个promise  但是这个promise并不是我自己的
   if(promise2 === x){
-    throw new TypeError('TypeError: Chaining cycle detected for promise #<Promise>')
+   return reject(new TypeError('TypeError: Chaining cycle detected for promise #<Promise>'))
   }
+  // 不单单需要考虑自己 还要考虑 有可能是别人的promise
+  let called; // 文档要求 一旦成功了 不能调用失败
   if((x!=null&&typeof x=== 'object') || typeof x === 'function'){
     // 这样只能说 x 可能是一个promise
+    try{
+      // x = {then:function(){}}
+      let then = x.then; // 取then方法
+      if(typeof then === 'function'){
+        then.call(x,function (y) { // resolve(new Promise)
+          if(!called){
+            called = true;
+          } else{
+            return;
+          }
+          resolvePromise(promise2,y,resolve,reject); //  递归检查promise
+        },function (r) {
+          if (!called) {
+            called = true;
+          } else {
+            return;
+          }
+          reject(r);
+        });
+      }else{ // then方法不存在
+        resolve(x); // 普通值
+      }
+    }catch(e){ // 如果取then方法出错了，就走失败
+      if (!called) {
+        called = true;
+      } else {
+        return;
+      }
+      reject(e);
+    }
   }else{
     resolve(x);
   }

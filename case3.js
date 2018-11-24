@@ -1,6 +1,6 @@
 
 
- let Promise = require('./promise3');
+let Promise = require('./promise3');
 let p = new Promise(function (resolve, reject) {
   setTimeout(() => {
     resolve('xx')
@@ -11,8 +11,14 @@ let p = new Promise(function (resolve, reject) {
 
 // 如果then方法返回了一个promise ，
 // 当前返回的这个promise2 应该等待这个promise执行结果再继续
-let promise2 = p.then(function () {
-  throw new Error()
+let promise2 = p.then(function (data) {
+  return new Promise((resolve,reject)=>{
+    resolve(new Promise(function (resolve,reject) {
+      setTimeout(() => {
+        resolve(10000);
+      }, 1000);
+    }));
+  })
 }).then(function (data) {
   console.log('success',data);
 },function (err) {

@@ -48,29 +48,17 @@ function resolvePromise(promise2,x,resolve,reject) {
       let then = x.then; // 取then方法
       if(typeof then === 'function'){
         then.call(x,function (y) { // resolve(new Promise)
-          if(!called){
-            called = true;
-          } else{
-            return;
-          }
+          if(!called){called = true;} else{ return;}
           resolvePromise(promise2,y,resolve,reject); //  递归检查promise
         },function (r) {
-          if (!called) {
-            called = true;
-          } else {
-            return;
-          }
+          if (!called) { called = true; } else { return; }
           reject(r);
         });
       }else{ // then方法不存在
         resolve(x); // 普通值
       }
     }catch(e){ // 如果取then方法出错了，就走失败
-      if (!called) {
-        called = true;
-      } else {
-        return;
-      }
+      if (!called) { called = true; } else { return; }
       reject(e);
     }
   }else{
@@ -78,6 +66,12 @@ function resolvePromise(promise2,x,resolve,reject) {
   }
 }
 Promise.prototype.then = function (onFulfilled, onRejected) {
+  onFulfilled = typeof onFulfilled === 'function' ? onFulfilled:function (data) {
+    return data
+  }
+  onRejected = typeof onRejected === 'function' ? onRejected:function (err) {
+    throw err;
+  }
   let self = this;
   let promise2; // 这个promise2 就是我们每次调用then后返回的新的promise
   // 实现链式调用主要的靠的就是这个promise
@@ -133,5 +127,16 @@ Promise.prototype.then = function (onFulfilled, onRejected) {
   return promise2;
   
 }
+// npm install promises-aplus-tests -g
 
-module.exports = Promise
+Promise.deferred = Promise.defer = function () {
+  let dfd = {};
+  dfd.promise = new Promise((resolve,reject)=>{
+    dfd.resolve = resolve;
+    dfd.reject = reject;
+  })
+  return dfd
+}
+module.exports = Promise;
+
+

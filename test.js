@@ -13,6 +13,7 @@ Object.defineProperty(obj,'then',{
 
 let p = new Promise((resolve,reject)=>{
   resolve('hello');
+  reject();
 })
 p.then(function () {
   

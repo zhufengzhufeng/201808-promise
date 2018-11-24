@@ -1,0 +1,23 @@
+{
+  "name": "201808",
+  "version": "1.0.0",
+  "description": "",
+  "main": "1.callback.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhufengzhufeng/201808-promise.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhufengzhufeng/201808-promise/issues"
+  },
+  "homepage": "https://github.com/zhufengzhufeng/201808-promise#readme",
+  "dependencies": {
+    "co": "^4.6.0"
+  }
+}
